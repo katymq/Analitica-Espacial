@@ -1,0 +1,51 @@
+# Instalación de paquetes
+# install.packages(sf)
+# install.packages(raster)
+# install.packages(spData)
+# install.packages(dplyr)
+
+# Cargar paquetes
+library(sf) #vector data
+library(raster) #raster data
+library(spData) #data
+
+library(dplyr)
+library(stringr) # for working with strings (pattern matching)
+library(tidyr) 
+
+# Documentación del paquete
+vignette(package = sf)
+vignette(sf1)
+
+
+#data(world)
+world - st_read(system.file(shapesworld.gpkg, 
+                             package=spData))
+names(world)
+world[16, ] # por posición
+world[, 13] # por columnas
+world[, c(name_long, lifeExp)] 
+
+
+world_agg1 = aggregate(pop ~ continent, FUN = sum, 
+                       data = world, na.rm = TRUE)
+
+class(world_agg1)
+
+data(coffee_data)
+names(world)
+names(coffee_data)
+dim(coffee_data)
+dim(world)
+
+world_coffee = left_join(world, coffee_data)
+# Union, usando = name_long
+class(world_coffee)
+
+plot(world_coffee[coffee_production_2017])
+
+
+# Raster
+elev = raster(nrows = 6, ncols = 6, res = 0.5,
+              xmn = -1.5, xmx = 1.5, ymn = -1.5, ymx = 1.5,
+              vals = 136)
